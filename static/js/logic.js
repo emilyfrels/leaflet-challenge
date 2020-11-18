@@ -17,14 +17,13 @@ d3.json(queryUrl, function(data) {
 
 // function to create features on map
 function createFeatures(earthquakeData) {
-  console.log(earthquakeData);
 
 
   // define function to run on each feature in features array
   function onEachFeature(feature, layer) {
 
     // bind popup with additional detail to each marker
-    layer.bindPopup("<h3>This is our popup TBD later");
+    layer.bindPopup("<h3>Earthquake Details</h3><hr><strong>Location: </strong>" + feature.properties.place + "<br><strong>Magnitude: </strong>" + feature.properties.mag + "<br><strong>Date/Time: </strong>" + new Date(feature.properties.time));
   }
   
   // create geojson layer
@@ -60,21 +59,10 @@ function createMap(earthquakes) {
     accessToken: API_KEY
   });
 
-  // create tile layer that is background of map
-  var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-      attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-      tileSize: 512,
-      maxZoom: 18,
-      zoomOffset: -1,
-      id: "mapbox/streets-v11",
-      accessToken: API_KEY
-  });
-
 
   // define basemap object to hold base layers
   var baseMaps = {
     "Street Map": streetmap,
-    "Light Map": lightmap,
     "Dark Map": darkmap
   };
 
