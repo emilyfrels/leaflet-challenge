@@ -27,14 +27,28 @@ function createFeatures(earthquakeData) {
     // bind popup with additional detail to each marker
     layer.bindPopup("<h3>Earthquake Details</h3><hr><strong>Location: </strong>" + feature.properties.place + "<br><strong>Magnitude: </strong>" + feature.properties.mag + "<br><strong>Date/Time: </strong>" + new Date(feature.properties.time));
 
+    var marker = L.circleMarker([+feature.geometry.coordinates[0],+feature.geometry.coordinates[1]]);
+
+    marker.setStyle({
+      radius: +feature.properties.mag,
+      fillColor: '#EA360F',
+      fillOpacity: +feature.geometry.coordinates[2]      
+    })
+
+    marker.addTo(myMap);
 
   }
+
+
+
+
 
   // create geojson layer
   var earthquakes = L.geoJSON(earthquakeData, {
     onEachFeature: onEachFeature
-    
   });
+
+
 
 
   // send earthquakes layer to createMap function
