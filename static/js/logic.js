@@ -17,6 +17,12 @@ d3.json(queryUrl, function(data) {
   console.log(data.features);
 });
 
+// create function to determine marker size based on magnitude of earthquake
+function markerSize(magnitude) {
+  // multiply magnitude by a large number so we can actually see it on the map
+  return magnitude * 25000;
+}
+
 // function to create features on map
 function createFeatures(earthquakeData) {
 
@@ -32,9 +38,23 @@ function createFeatures(earthquakeData) {
 
   // create geojson layer
   var earthquakes = L.geoJSON(earthquakeData, {
-    onEachFeature: onEachFeature
+    onEachFeature: onEachFeature,
+
+
+    // define radius based on marker size and opacity based on depth of earthquake
+    // refered to this website for help on pointToLayer: https://leafletjs.com/examples/geojson/
+    pointToLayer: function(feature, latlng) {
+      return new L.circle(latlng, {
+        radius: markerSize(feature.properties.mag),
+        fillColor: '#EA0F23',
+        color: '#EA0F23',
+        opacity: feature.geometry.coordinates[2]
+      });
+    }
     
   });
+
+
 
 
   // send earthquakes layer to createMap function
