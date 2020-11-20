@@ -140,8 +140,16 @@ function createMap(earthquakes) {
   // when layer control is added, insert div with class of legend
   legend.onAdd = function() {
     var div = L.DomUtil.create("div", "legend");
-      div.innerHTML += "<h3>Depth of Earthquake</h3>"
-      console.log(div);
+      labels = ["<h3>Depth of Earthquake</h3>"],
+      categories = ['< 3', '3-5', '5-7', '7-9', '9-11', '> 11'];
+
+      for (var i=0; i < categories.length; i++) {
+        div.innherHTML +=
+        labels.push(
+          '<i class="circle" style ="background:' + getColor(categories[i]) + '"></i>' + (categories[i] ? categories[i] : '+')
+        );
+      }
+      div.innerHTML = labels.join('<br>');
     return div;
   }
 

@@ -17,3 +17,8 @@ html {
   width: auto;
   border-radius: 8px;
 }
+
+.circle {
+  width: auto;
+  border: 1;
+}
