@@ -1,26 +1,31 @@
-//function to create map
-
-console.log("logic_3.js for leaflet homework");
+// console.log because we can
+console.log("logic.js for leaflet homework");
 
 var queryUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=" +
 "2014-01-02&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337";
+
+// console.log the query url for easy access to check JSON
 console.log(`var queryUrl = ${queryUrl}`);
-
-var myMap;
-
 
 
 // Perform a GET request to the query URL
 d3.json(queryUrl, function(data) {
+  
+  
   // Once we get a response, send the data.features object to the createFeatures function
   createFeatures(data.features);
+
+
+  // console.log to make sure we're pulling in data from the query url
   console.log(data.features);
 });
 
 // create function to determine marker size based on magnitude of earthquake
 function markerSize(magnitude) {
+
   // multiply magnitude by a large number so we can actually see it on the map
   return magnitude * 25000;
+  
 }
 
 // function to create features on map
@@ -53,8 +58,6 @@ function createFeatures(earthquakeData) {
     }
     
   });
-
-
 
 
   // send earthquakes layer to createMap function
@@ -110,5 +113,22 @@ function createMap(earthquakes) {
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
+
+
+  // create legend
+  var legend = L.control({
+    position: 'bottomright'
+  });
+
+  // when layer control is added, insert div with class of legend
+  legend.onAdd = function() {
+    var div = L.DomUtil.create("div", "legend");
+      div.innerHTML += "<h3>Magnitude</h3>"
+      console.log(div);
+    return div;
+  }
+
+  legend.addTo(myMap);
+
 
 }
