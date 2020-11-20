@@ -18,7 +18,11 @@ html {
   border-radius: 8px;
 }
 
-.circle {
-  width: auto;
-  border: 1;
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 15px;
+  opacity: .9;
 }
+

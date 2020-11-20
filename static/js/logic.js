@@ -140,16 +140,15 @@ function createMap(earthquakes) {
   // when layer control is added, insert div with class of legend
   legend.onAdd = function() {
     var div = L.DomUtil.create("div", "legend");
-      labels = ["<h3>Depth of Earthquake</h3>"],
-      categories = ['< 3', '3-5', '5-7', '7-9', '9-11', '> 11'];
+      div.innerHTML += "<h3>Depth of Earthquake</h3>",
+
+      // found some help in this article for this section: https://www.igismap.com/legend-in-leafletjs-map-with-topojson/
+      categories = [-1,3,5,7,9,11];
 
       for (var i=0; i < categories.length; i++) {
-        div.innherHTML +=
-        labels.push(
-          '<i class="circle" style ="background:' + getColor(categories[i]) + '"></i>' + (categories[i] ? categories[i] : '+')
-        );
+        div.innerHTML += '<i style="background:' + getColor(categories[i] + 1 ) + '"></i>' + categories[i] + (categories[i + 1] ? '&ndash;' + categories[i + 1] + '<br>':'+');
+
       }
-      div.innerHTML = labels.join('<br>');
     return div;
   }
 
