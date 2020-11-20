@@ -20,6 +20,8 @@ d3.json(queryUrl, function(data) {
   console.log(data.features);
 });
 
+
+
 // create function to determine marker size based on magnitude of earthquake
 function markerSize(magnitude) {
 
@@ -27,6 +29,21 @@ function markerSize(magnitude) {
   return magnitude * 25000;
   
 }
+
+
+// create function to determine color based on depth of earthquake
+function getColor(depth) {
+
+    return  depth < 3 ? '#8BC34A': // color will be green if depth is less than 10
+            depth < 5 ? '#FFEB3B': // color will be yellow if depth is less than 30
+            depth < 7 ? '#FF8F00': // color will be orange if depth is less than 50
+            depth < 9 ? '#FF5722': // color will be dark orange if depth is less than 70
+            depth < 11 ? '#FF0033': // color will be red if depth is less than 90
+            depth > 11 ? '#6A1B9A': // color will be purple if depth is greater than 90
+            '#FAFAFA'; // if nothing else, return white
+}
+
+
 
 // function to create features on map
 function createFeatures(earthquakeData) {
@@ -37,9 +54,9 @@ function createFeatures(earthquakeData) {
 
     // bind popup with additional detail to each marker
     layer.bindPopup("<h3>Earthquake Details</h3><hr><strong>Location: </strong>" + feature.properties.place + "<br><strong>Magnitude: </strong>" + feature.properties.mag + "<br><strong>Date/Time: </strong>" + new Date(feature.properties.time));
-
-
   }
+
+
 
   // create geojson layer
   var earthquakes = L.geoJSON(earthquakeData, {
@@ -51,9 +68,9 @@ function createFeatures(earthquakeData) {
     pointToLayer: function(feature, latlng) {
       return new L.circle(latlng, {
         radius: markerSize(feature.properties.mag),
-        fillColor: '#EA0F23',
-        color: '#EA0F23',
-        opacity: feature.geometry.coordinates[2]
+        fillColor: getColor(feature.geometry.coordinates[2]),
+        color: getColor(feature.geometry.coordinates[2]),
+        opacity: 100
       });
     }
     
@@ -123,7 +140,7 @@ function createMap(earthquakes) {
   // when layer control is added, insert div with class of legend
   legend.onAdd = function() {
     var div = L.DomUtil.create("div", "legend");
-      div.innerHTML += "<h3>Magnitude</h3>"
+      div.innerHTML += "<h3>Depth of Earthquake</h3>"
       console.log(div);
     return div;
   }
