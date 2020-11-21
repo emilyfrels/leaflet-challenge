@@ -1,8 +1,7 @@
 // console.log because we can
 console.log("logic.js for leaflet homework");
 
-var queryUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=" +
-"2014-01-02&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337";
+var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // console.log the query url for easy access to check JSON
 console.log(`var queryUrl = ${queryUrl}`);
@@ -53,7 +52,7 @@ function createFeatures(earthquakeData) {
   function onEachFeature(feature, layer) {
 
     // bind popup with additional detail to each marker
-    layer.bindPopup("<h3>Earthquake Details</h3><hr><strong>Location: </strong>" + feature.properties.place + "<br><strong>Magnitude: </strong>" + feature.properties.mag + "<br><strong>Date/Time: </strong>" + new Date(feature.properties.time));
+    layer.bindPopup("<h3>Earthquake Details</h3><hr><strong>Location: </strong>" + feature.properties.place + "<br><strong>Magnitude: </strong>" + feature.properties.mag + "<br><strong>Date/Time: </strong>" + new Date(feature.properties.time) + "<br><strong>Depth: </strong>" + feature.geometry.coordinates[2]);
   }
 
 
@@ -70,7 +69,7 @@ function createFeatures(earthquakeData) {
         radius: markerSize(feature.properties.mag),
         fillColor: getColor(feature.geometry.coordinates[2]),
         color: getColor(feature.geometry.coordinates[2]),
-        opacity: 100
+        opacity: 5
       });
     }
     
