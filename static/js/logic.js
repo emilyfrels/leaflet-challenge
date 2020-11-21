@@ -34,12 +34,12 @@ function markerSize(magnitude) {
 // create function to determine color based on depth of earthquake
 function getColor(depth) {
 
-    return  depth < 3 ? '#8BC34A': // color will be green if depth is less than 10
-            depth < 5 ? '#FFEB3B': // color will be yellow if depth is less than 30
-            depth < 7 ? '#FF8F00': // color will be orange if depth is less than 50
-            depth < 9 ? '#FF5722': // color will be dark orange if depth is less than 70
-            depth < 11 ? '#FF0033': // color will be red if depth is less than 90
-            depth > 11 ? '#6A1B9A': // color will be purple if depth is greater than 90
+    return  depth < 3 ? '#8BC34A': // color will be green if depth is less than 3
+            depth < 5 ? '#FFEB3B': // color will be yellow if depth is less than 5
+            depth < 7 ? '#FF8F00': // color will be orange if depth is less than 7
+            depth < 9 ? '#FF5722': // color will be dark orange if depth is less than 9
+            depth < 11 ? '#FF0033': // color will be red if depth is less than 11
+            depth > 11 ? '#6A1B9A': // color will be purple if depth is greater than 11
             '#FAFAFA'; // if nothing else, return white
 }
 
